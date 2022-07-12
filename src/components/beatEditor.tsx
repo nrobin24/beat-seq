@@ -1,12 +1,18 @@
 import { For } from 'solid-js';
-import { currentBeat, toggleStep } from '~/lib/beatStore';
+import { currentBeat, toggleStep, addTrack } from '~/lib/beatStore';
 import {
-  play, pause, stop, playerState,
+  play, pause, stop, playerState, sounds
 } from '../lib/playerStore';
+import {createSignal, Switch, Match} from 'solid-js';
 
 import './beatEditor.css';
 
+const [isNewTrackActive, setIsNewTrackActive] = createSignal(false)
+const [newTrackSoundId, setNewTrackSoundId] = createSignal(0)
+const [newTrackName, setNewTrackName] = createSignal("")
+
 export default function () {
+
   return (
         <div>
             <div>
@@ -37,6 +43,36 @@ export default function () {
                                     )}
                                 </For>
                             </div>
+                            <Switch>
+                                <Match when={isNewTrackActive()}>
+                                            <div>
+                                                <span>name: </span>
+                                                <input type="text" onChange={(e) => setNewTrackName(e.currentTarget.value)}/>
+                                            </div>
+                                            <div>
+                                                <span>sound: </span>
+                                                <select name="soundSelector" id="soundSelector" value={newTrackSoundId()} onChange={
+                                                    (e) => setNewTrackSoundId(parseInt(e.currentTarget.value))
+                                                }>
+                                                    <For each={sounds}>
+                                                        {(sound) => (
+                                                            <option value={sound.id}>{sound.name}</option>
+                                                        )}
+                                                    </For>
+                                                </select>
+                                            </div>
+                                            <button onClick={() => {
+
+                                                setIsNewTrackActive(false);
+                                                addTrack(newTrackName(), 16, newTrackSoundId())
+
+                                            }}>done</button>
+                                </Match>
+                                <Match when={!isNewTrackActive()}>
+                                    <button onClick={() => setIsNewTrackActive(true)}>Add Track</button>
+                                </Match>
+                            </Switch>
+                            
                         </div>
                     )}
                 </For>

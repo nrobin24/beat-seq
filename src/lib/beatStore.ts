@@ -37,5 +37,6 @@ const addTrack = (name: string, stepCount: number, soundId: number) => {
 
 export {
     currentBeat,
-    toggleStep
+    toggleStep,
+    addTrack
 };
