@@ -1,0 +1,7 @@
+.is-current-step {
+    background-color: red;
+}
+
+.is-playing {
+    background-color: green;
+}

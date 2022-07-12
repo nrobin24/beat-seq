@@ -1,11 +1,11 @@
-import Counter from "~/components/Counter";
+import BeatEditor from "~/components/beatEditor";
 import "./index.css";
 
 export default function Home() {
   return (
     <main>
       <h1>BeatSeq</h1>
-      <Counter />
+      <BeatEditor />
       <p>
         Make a cool beat!
       </p>
